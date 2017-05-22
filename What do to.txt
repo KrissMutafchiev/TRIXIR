@@ -1,0 +1,9 @@
+Open the "specs" document.
+
+The goal is to apply the design specifications.
+
+For this, edit index.html and style.css
+
+Send us back the modified documents.
+
+Thanks!

@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xmlns:og="http://opengraphprotocol.org/schema/">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Front-end Test</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+	</head>
+	<body>
+
+<!-- Edit this html file as needed. -->
+
+<div class="editable_box" id="editable_box_widget_edit">
+	<div class="editable_group ">
+		<h3>1 Start your widget</h3>
+		<div class="editable" field="element">
+			<label>Data Source:</label>
+			<input id="search_data-field"  placeholder="Search venue, circuit, club..." />
+			<button class="element-data-src"><img src="search.png" alt="search"></button>
+		</div>
+
+	</div>
+	<div class="editable_group">
+		<h3>2 Setup your widget</h3>
+		
+		<div class="editable" field="Name">
+			<label>Widget title:</label>
+			<input type="text" class="widget_title" name="Name" value="" />
+			<button class="widget_title-btn save-button">Save</button>
+		</div>
+		
+		<div class="editable" field="ranking_type">
+			<label>Rank by:</label>
+			<div class="select-field">
+				<select name="ranking_type"><option value="EARNINGS">Earnings</option><option value="ITM">Number of ITM</option><option value="WIN">Number of 1st place</option></select>
+			</div>
+		</div>
+
+		<div class="editable" field="period">
+			<label>Filter by time:</label>
+			<div class="select-field">
+				<select name="period"><option value="ALL">All time</option><option>2014</option><option>2013</option><option>2012</option><option>2011</option><option>2010</option></select>
+			</div>
+		</div>
+
+		<div class="editable" field="limit">
+			<label>List size:</label>
+			<div class="select-field">
+				<select name="limit"><option value="1">1</option><option value="5">5</option><option value="10">10</option><option value="25">25</option><option value="50">50</option></select>
+			</div>
+		</div>
+	
+	</div>
+	
+	<div class="editable_group line_of_2 ">
+		<h3>3 Customize your widget</h3>
+
+		<div class="editable" field="lang">
+			<label>Language:</label>
+			<div class="select-field">
+				<select name="lang"><option value="en">English</option><option value="fr">Français</option></select>
+			</div>
+		</div>
+		<div class="editable " field="colors">
+			<div class="col-input left-side">
+				<label>Widget width:</label>
+				<input id="widget_width_field" type="text" name="size" value="400" />
+				<button class="widget_width_btn save-button">Save</button>
+			</div>
+			<div class="col-input right-side">
+				<label>Color Scheme:</label>
+				<div class="select-field color_scheme_box">
+					<select id="color_scheme_field" name="colors"><option value="0">Light</option></select>
+				</div>
+			</div>
+		</div>
+		<div class="editable" field="https">
+			<label>Link in HTTPS</label>
+			<div class="select-field">
+				<select name="https"><option value="0">No</option><option value="1">Yes</option></select>
+			</div>
+		</div>
+	</div>
+	
+
+</div>
+
+<script type="text/javascript" src="jquery-3.1.0.js"></script>
+<script type="text/javascript">
+// if you have time for some JS, do it here.
+var saving = {},
+getSaveInputValue;
+
+$(function() {
+	// GET INPUT VALUE
+	$('.editable_box .save-button').on('click',function () {
+		if($(this).hasClass('widget_width_btn')){
+			getSaveInputValue  = $(this).parent().find('input').val();
+		}else{
+			getSaveInputValue = $('.widget_title').val();
+		}
+	});
+	// END GET INPUT VALUE
+	$('.editable_box .save-button').click(function() {
+		// show it's saving
+		$(this).after( imgs.load );
+		// save
+		saving['value of the saved input'] = getSaveInputValue;
+		console.log(saving);
+		// emulates a slow save
+		setTimeout(function() {
+			imgs.load.replaceWith( imgs.saved );
+		}, 1500);
+		setTimeout(function() {
+			imgs.saved.remove();
+		}, 2000);
+	});
+	$('.editable_box select').change(function( currentSelect ) {
+		// todo, same as button click... WITHOUT COPY-PASTING ALL CODE.
+		currentSelect = $(this);
+		$(this).parents('div .editable').append(imgs.load);
+		setTimeout(function() {
+			$('.loading_img').remove();
+			currentSelect.parents('div .editable').append(imgs.saved);
+			setTimeout(function() {
+				currentSelect.parents('div .editable').find('img').remove();
+				}, 2000);
+			}, 1500);
+	});
+	var imgs = {
+		'load': $('<img class="loading_img" src="loading.gif" />'),
+		'saved': $('<img class="saved_img" src="saved.png" />')
+	};
+});
+</script>
+
+</body>
+</html>
